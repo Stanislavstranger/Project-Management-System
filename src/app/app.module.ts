@@ -1,32 +1,27 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
-import { AuthService } from './services/auth.service';
-import { SignUpComponent } from './components/sign-up/sign-up.component';
-import { SignInComponent } from './components/sign-in/sign-in/sign-in.component';
-import { UserListComponent } from './components/user-list/user-list/user-list.component';
-
+import { CoreModule } from './core/core.module';
+import { AuthModule } from './auth/auth.module';
+import { WelcomePageComponent } from './welcome-page/welcome-page.component';
+import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    SignUpComponent,
-    SignInComponent,
-    UserListComponent,
-  ],
+  declarations: [AppComponent, WelcomePageComponent, NotFoundPageComponent],
   imports: [
-    FormsModule,
     BrowserModule,
+    CoreModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    HttpClientModule,
+    AuthModule,
+    MatIconModule,
+    MatButtonModule
   ],
-  providers: [AuthService],
-  bootstrap: [AppComponent]
+  providers: [],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

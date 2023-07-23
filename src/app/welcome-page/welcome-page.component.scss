@@ -1,0 +1,22 @@
+span {
+  font-weight: 700;
+}
+
+.welcome-page {
+  display: flex;
+  font-size: 20px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  padding-top: 13vh;
+  padding-bottom: 20px;
+  gap: 10px;
+}
+
+p {
+  max-width: 300px;
+}
+
+div {
+  flex: 0 0 25%;
+}

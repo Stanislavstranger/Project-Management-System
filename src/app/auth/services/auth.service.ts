@@ -24,7 +24,8 @@ export class AuthService {
   }
 
   saveToken(login: string, token: string) {
-    localStorage.setItem(login, token);
+    localStorage.setItem('login', login);
+    localStorage.setItem('token', token);
   }
 
   getToken(login: string): string | null {
@@ -36,8 +37,8 @@ export class AuthService {
   }
 
   authorize() {
-    this.tokenKey = localStorage.getItem('e') as string;
-    this.username = localStorage.getItem('e') as string;
+    this.tokenKey = localStorage.getItem('token') as string;
+    this.username = localStorage.getItem('token') as string;
   }
 
   getUserId() {

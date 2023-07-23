@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
-
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -12,6 +11,7 @@ export class SignUpComponent {
     login: '',
     password: '',
   };
+  hide = true;
 
   constructor(private authService: AuthService) {}
 
@@ -26,4 +26,3 @@ export class SignUpComponent {
     );
   }
 }
-

@@ -1,0 +1,21 @@
+div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.number {
+  font-size: 50vmin;
+  font-weight: 700;
+}
+
+.page-not-found {
+  font-size: 40px;
+  margin-bottom: 20px;
+}
+
+.message{
+  font-size: 20px;
+  margin-bottom: 20px;
+}
