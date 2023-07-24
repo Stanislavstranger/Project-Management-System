@@ -4,23 +4,29 @@ import { BoardsListComponent } from './boards/boards-list/components/boards-list
 import { CoreRoutingModule } from './core/core-routing.module';
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
 import { WelcomePageComponent } from './welcome-page/welcome-page.component';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
-  { path: '', component: WelcomePageComponent},
+  { path: '', component: WelcomePageComponent },
   {
     path: '',
-    loadChildren: () => import('./core/core.module').then((m) => m.CoreModule)
+    loadChildren: () => import('./core/core.module').then((m) => m.CoreModule),
   },
   {
     path: 'signin',
-    loadChildren: () => import('./core/core.module').then((m) => m.CoreModule)
+    loadChildren: () => import('./core/core.module').then((m) => m.CoreModule),
   },
   {
     path: 'signup',
-    loadChildren: () => import('./core/core.module').then((m) => m.CoreModule)
+    loadChildren: () => import('./core/core.module').then((m) => m.CoreModule),
   },
-  { path: 'boards-list', component: BoardsListComponent},
-  { path: '**', component: NotFoundPageComponent}
+  {
+    path: 'boards-list',
+    canActivate: [AuthGuard],
+    canDeactivate: [AuthGuard],
+    component: BoardsListComponent,
+  },
+  { path: '**', component: NotFoundPageComponent },
 ];
 
 @NgModule({

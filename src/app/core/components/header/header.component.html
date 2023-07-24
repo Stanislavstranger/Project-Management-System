@@ -2,11 +2,17 @@
   <header class="header__container _container">
     <h1 class="no-select" routerLink="">{{ appTitle }}</h1>
     <div class="button">
-      <button mat-raised-button routerLink="signin">
+      <button mat-raised-button *ngIf="!isLoggedIn" routerLink="signin">
         <mat-icon style="margin-right: 5px">login</mat-icon>Sign in
       </button>
-      <button mat-raised-button routerLink="signup">
+      <button mat-raised-button *ngIf="!isLoggedIn" routerLink="signup">
         <mat-icon style="margin-right: 5px">person</mat-icon>Sing up
+      </button>
+      <button mat-raised-button *ngIf="isLoggedIn" routerLink="signup">
+        <mat-icon style="margin-right: 5px">edit</mat-icon>Edit profile
+      </button>
+      <button mat-raised-button *ngIf="isLoggedIn" routerLink="signup">
+        <mat-icon style="margin-right: 5px">logout</mat-icon>Logout
       </button>
     </div>
   </header>

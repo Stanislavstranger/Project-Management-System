@@ -32,8 +32,6 @@ export class SignInComponent implements OnInit {
       (response) => {
         console.log('Вход выполнен:', response);
         this.authService.saveToken(this.formData.value.login, response.token);
-        this.authService.authorize();
-        this.authService.getUserId();
         this.router.navigate(['boards-list']);
       },
       (error) => {

@@ -10,6 +10,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { InputPasswordModule } from '../shared/components/input-password/input-password.module';
+import { CoreModule } from '../core/core.module';
+import { CoreRoutingModule } from '../core/core-routing.module';
 
 @NgModule({
   declarations: [SignUpComponent, SignInComponent],
@@ -23,7 +25,9 @@ import { InputPasswordModule } from '../shared/components/input-password/input-p
     MatButtonModule,
     MatIconModule,
     InputPasswordModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CoreModule,
+    CoreRoutingModule
   ],
   providers: [AuthService],
 })
