@@ -28,12 +28,16 @@ export class AuthService {
     localStorage.setItem('token', token);
   }
 
-  /* getToken(login: string): string | null {
-    return localStorage.getItem(login);
-  } */
+  getToken() {
+    return localStorage.getItem('token');
+  }
 
   removeToken(login: string) {
     localStorage.removeItem(login);
+  }
+
+  isLoggedIn() {
+    return this.getToken() !== null;
   }
 
   authorize() {
@@ -66,13 +70,5 @@ export class AuthService {
         console.log('UserID:', userId);
         this.userId = userId;
       });
-  }
-
-  getToken() {
-    return localStorage.getItem('token');
-  }
-
-  isLoggedIn() {
-    return this.getToken() !== null;
   }
 }

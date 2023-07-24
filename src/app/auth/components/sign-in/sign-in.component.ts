@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
-import { Route, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-in',
@@ -34,11 +34,10 @@ export class SignInComponent implements OnInit {
         this.authService.saveToken(this.formData.value.login, response.token);
         this.authService.authorize();
         this.authService.getUserId();
-        this.router.navigate(['boards']);
+        this.router.navigate(['boards-list']);
       },
       (error) => {
-        console.error('Ошибка входа:', error);
-        console.log('Вход выполнен:', this.formData.value.login);
+        alert('This user does not exist. Register to login');
       }
     );
   }
