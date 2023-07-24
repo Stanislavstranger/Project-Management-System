@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { BoardsListComponent } from './boards/boards-list/components/boards-list.component';
 import { CoreRoutingModule } from './core/core-routing.module';
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
 import { WelcomePageComponent } from './welcome-page/welcome-page.component';
@@ -18,6 +19,7 @@ const routes: Routes = [
     path: 'signup',
     loadChildren: () => import('./core/core.module').then((m) => m.CoreModule)
   },
+  { path: 'boards-list', component: BoardsListComponent},
   { path: '**', component: NotFoundPageComponent}
 ];
 

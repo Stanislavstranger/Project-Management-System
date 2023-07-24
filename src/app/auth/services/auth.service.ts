@@ -28,9 +28,9 @@ export class AuthService {
     localStorage.setItem('token', token);
   }
 
-  getToken(login: string): string | null {
+  /* getToken(login: string): string | null {
     return localStorage.getItem(login);
-  }
+  } */
 
   removeToken(login: string) {
     localStorage.removeItem(login);
@@ -66,5 +66,13 @@ export class AuthService {
         console.log('UserID:', userId);
         this.userId = userId;
       });
+  }
+
+  getToken() {
+    return localStorage.getItem('token');
+  }
+
+  isLoggedIn() {
+    return this.getToken() !== null;
   }
 }

@@ -9,9 +9,15 @@ import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { BoardsListComponent } from './boards/boards-list/components/boards-list.component';
 
 @NgModule({
-  declarations: [AppComponent, WelcomePageComponent, NotFoundPageComponent],
+  declarations: [
+    AppComponent,
+    WelcomePageComponent,
+    NotFoundPageComponent,
+    BoardsListComponent,
+  ],
   imports: [
     BrowserModule,
     CoreModule,
@@ -19,7 +25,7 @@ import { MatButtonModule } from '@angular/material/button';
     BrowserAnimationsModule,
     AuthModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
