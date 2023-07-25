@@ -13,7 +13,7 @@ import {AuthService} from '../auth/services/auth.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate, CanDeactivate<unknown> {
+export class AuthGuard implements CanActivate {
 
   constructor(private authService: AuthService, private router: Router) {
   }
@@ -26,18 +26,6 @@ export class AuthGuard implements CanActivate, CanDeactivate<unknown> {
       return false;
     }
     return true;
-  }
-
-  canDeactivate(
-    component: unknown,
-    currentRoute: ActivatedRouteSnapshot,
-    currentState: RouterStateSnapshot,
-    nextState?: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if (confirm('Are you sure?')) {
-      this.authService.removeToken();
-      return true;
-    }
-    return false;
   }
 }
 

@@ -8,10 +8,10 @@
       <button mat-raised-button *ngIf="!isLoggedIn" routerLink="signup">
         <mat-icon style="margin-right: 5px">person</mat-icon>Sing up
       </button>
-      <button mat-raised-button *ngIf="isLoggedIn" routerLink="signup">
+      <button mat-raised-button *ngIf="isLoggedIn" routerLink="modal">
         <mat-icon style="margin-right: 5px">edit</mat-icon>Edit profile
       </button>
-      <button mat-raised-button *ngIf="isLoggedIn" routerLink="signup">
+      <button mat-raised-button *ngIf="isLoggedIn" (click)="logOut()" data-logout-btn>
         <mat-icon style="margin-right: 5px">logout</mat-icon>Logout
       </button>
     </div>

@@ -1,6 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { tap, map } from 'rxjs/operators';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http';
+import {catchError, delay, Observable, retry, tap, map, throwError} from 'rxjs'
+import { Router } from '@angular/router';
+import { ErrorService } from 'src/app/services/error.service';
 
 @Injectable({
   providedIn: 'root',
@@ -13,10 +19,16 @@ export class AuthService {
   public username: string | null = null;
   public userId: string | null = null;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private errorService: ErrorService
+  ) {}
 
-  signUp(formData: any) {
-    return this.http.post<any>(`${this.apiUrl}/auth/signup`, formData);
+  signUp(formData: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/auth/signup`, formData).pipe(
+      catchError(this.errorHandler.bind(this))
+    );
   }
 
   signIn(formData: any) {
@@ -71,5 +83,14 @@ export class AuthService {
         console.log('UserID:', userId);
         this.userId = userId;
       });
+  }
+
+  logOut() {
+    this.router.navigate(['']);
+  }
+
+  private errorHandler(error: HttpErrorResponse) {
+    this.errorService.handle(error.message);
+    return throwError(() => error.message);
   }
 }

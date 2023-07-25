@@ -10,6 +10,7 @@ import { NotFoundPageComponent } from './not-found-page/not-found-page.component
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { BoardsListComponent } from './boards/boards-list/components/boards-list.component';
+import { GlobalErrorComponent } from './global-error/global-error.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { BoardsListComponent } from './boards/boards-list/components/boards-list
     WelcomePageComponent,
     NotFoundPageComponent,
     BoardsListComponent,
+    GlobalErrorComponent,
   ],
   imports: [
     BrowserModule,

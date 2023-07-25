@@ -23,7 +23,6 @@ const routes: Routes = [
   {
     path: 'boards-list',
     canActivate: [AuthGuard],
-    canDeactivate: [AuthGuard],
     component: BoardsListComponent,
   },
   { path: '**', component: NotFoundPageComponent },

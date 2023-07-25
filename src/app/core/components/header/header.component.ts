@@ -15,4 +15,11 @@ export class HeaderComponent{
   ngDoCheck(): void {
     this.isLoggedIn = this.authService.isLoggedIn();
   }
+
+  logOut() {
+    if (confirm('Are you sure you want to go out?')) {
+      this.authService.logOut();
+      this.authService.removeToken();
+    }
+  }
 }
