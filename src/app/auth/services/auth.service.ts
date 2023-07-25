@@ -4,7 +4,13 @@ import {
   HttpErrorResponse,
   HttpHeaders,
 } from '@angular/common/http';
-import {catchError, delay, Observable, retry, tap, map, throwError} from 'rxjs'
+import {
+  catchError,
+  Observable,
+  tap,
+  map,
+  throwError,
+} from 'rxjs';
 import { Router } from '@angular/router';
 import { ErrorService } from 'src/app/services/error.service';
 
@@ -26,13 +32,15 @@ export class AuthService {
   ) {}
 
   signUp(formData: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/auth/signup`, formData).pipe(
-      catchError(this.errorHandler.bind(this))
-    );
+    return this.http
+      .post<any>(`${this.apiUrl}/auth/signup`, formData)
+      .pipe(catchError(this.errorHandler.bind(this)));
   }
 
-  signIn(formData: any) {
-    return this.http.post<any>(`${this.apiUrl}/auth/signin`, formData);
+  signIn(formData: any): Observable<any> {
+    return this.http
+      .post<any>(`${this.apiUrl}/auth/signin`, formData)
+      .pipe(catchError(this.errorHandler.bind(this)));
   }
 
   saveToken(login: string, token: string) {

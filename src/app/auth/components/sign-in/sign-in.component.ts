@@ -34,9 +34,7 @@ export class SignInComponent implements OnInit {
         this.authService.saveToken(this.formData.value.login, response.token);
         this.router.navigate(['boards-list']);
       },
-      (error) => {
-        alert('This user does not exist. Register to login');
-      }
+      (error) => {}
     );
   }
 }

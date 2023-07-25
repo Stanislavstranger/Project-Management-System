@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { BoardsListComponent } from './boards/boards-list/components/boards-list.component';
 import { CoreRoutingModule } from './core/core-routing.module';
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
 import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { AuthGuard } from './guards/auth.guard';
+import { BoardsListComponent } from './boards/components/boards-list/boards-list.component';
 
 const routes: Routes = [
   { path: '', component: WelcomePageComponent },
