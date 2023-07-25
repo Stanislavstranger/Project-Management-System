@@ -13,6 +13,7 @@ import {
 } from 'rxjs';
 import { Router } from '@angular/router';
 import { ErrorService } from 'src/app/services/error.service';
+import { User } from 'src/app/models/models';
 
 @Injectable({
   providedIn: 'root',
@@ -31,13 +32,13 @@ export class AuthService {
     private errorService: ErrorService
   ) {}
 
-  signUp(formData: any): Observable<any> {
+  signUp(formData: User): Observable<any> {
     return this.http
       .post<any>(`${this.apiUrl}/auth/signup`, formData)
       .pipe(catchError(this.errorHandler.bind(this)));
   }
 
-  signIn(formData: any): Observable<any> {
+  signIn(formData: User): Observable<any> {
     return this.http
       .post<any>(`${this.apiUrl}/auth/signin`, formData)
       .pipe(catchError(this.errorHandler.bind(this)));

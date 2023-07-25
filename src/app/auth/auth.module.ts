@@ -12,9 +12,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { InputPasswordModule } from '../shared/components/input-password/input-password.module';
 import { CoreModule } from '../core/core.module';
 import { CoreRoutingModule } from '../core/core-routing.module';
+import { FocusDirective } from '../directives/focus.directive';
 
 @NgModule({
-  declarations: [SignUpComponent, SignInComponent],
+  declarations: [SignUpComponent, SignInComponent, FocusDirective],
   exports: [SignUpComponent, SignInComponent],
   imports: [
     CommonModule,
