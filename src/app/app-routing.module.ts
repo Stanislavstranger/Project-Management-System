@@ -10,6 +10,7 @@ const routes: Routes = [
   { path: '', component: WelcomePageComponent },
   {
     path: '',
+
     loadChildren: () => import('./core/core.module').then((m) => m.CoreModule),
   },
   {

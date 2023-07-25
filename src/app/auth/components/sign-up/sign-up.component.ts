@@ -36,7 +36,6 @@ export class SignUpComponent implements OnInit {
       },
       (error) => {
         console.error('Ошибка регистрации:', error);
-        alert('Such a user already exists. Enter other details');
       }
     );
   }
