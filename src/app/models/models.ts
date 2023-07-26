@@ -6,7 +6,6 @@ export interface User {
 }
 
 export interface Board {
-  readonly _id: string;
   title: string;
   owner: string;
   users: string[];

@@ -7,9 +7,10 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import { CoreRoutingModule } from './core-routing.module';
 import { MatIconModule } from '@angular/material/icon';
+import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
 
 @NgModule({
-  declarations: [HeaderComponent, FooterComponent],
+  declarations: [HeaderComponent, FooterComponent, EditProfileComponent],
   exports: [HeaderComponent, FooterComponent],
   imports: [
     CommonModule,

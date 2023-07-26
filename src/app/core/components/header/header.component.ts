@@ -6,13 +6,17 @@ import { AuthService } from 'src/app/auth/services/auth.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent{
+export class HeaderComponent implements OnInit {
   appTitle = 'Project Management System';
   isLoggedIn = true;
+  login: string | null = '';
 
   constructor(private authService: AuthService) {}
 
+  ngOnInit(): void {}
+
   ngDoCheck(): void {
+    this.login = this.authService.getLogin();
     this.isLoggedIn = this.authService.isLoggedIn();
   }
 

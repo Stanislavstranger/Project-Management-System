@@ -5,6 +5,7 @@ import { NotFoundPageComponent } from './not-found-page/not-found-page.component
 import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { AuthGuard } from './guards/auth.guard';
 import { BoardsListComponent } from './boards/components/boards-list/boards-list.component';
+import { BoardRoutingModule } from './boards/board-routing.module';
 
 const routes: Routes = [
   { path: '', component: WelcomePageComponent },
@@ -30,7 +31,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes), CoreRoutingModule],
+  imports: [RouterModule.forRoot(routes), CoreRoutingModule, BoardRoutingModule],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

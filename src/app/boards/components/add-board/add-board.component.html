@@ -1,0 +1,27 @@
+<section class="_container">
+  <h2>Create new board</h2>
+  <form [formGroup]="boardsData" (ngSubmit)="onSubmit()">
+    <div>
+      <mat-form-field>
+        <mat-label>title</mat-label>
+        <input matInput formControlName="title" type="title" id="typeTitleX" appFocus>
+      </mat-form-field>
+    </div>
+    <mat-form-field>
+      <mat-label>Select Users</mat-label>
+      <mat-select [multiple]="true" formControlName="selectedUsers">
+        <mat-option *ngFor="let option of options" [value]="option">
+          {{ option }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div class="button">
+      <button type="submit" mat-raised-button color="primary">
+        <mat-icon style="margin-right: 5px">create</mat-icon>Create
+      </button>
+      <button type="button" mat-raised-button color="primary" routerLink="../">
+        <mat-icon style="margin-right: 5px">cancel</mat-icon>Cancel
+      </button>
+    </div>
+  </form>
+</section>

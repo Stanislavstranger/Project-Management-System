@@ -4,13 +4,7 @@ import {
   HttpErrorResponse,
   HttpHeaders,
 } from '@angular/common/http';
-import {
-  catchError,
-  Observable,
-  tap,
-  map,
-  throwError,
-} from 'rxjs';
+import { catchError, Observable, tap, map, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { ErrorService } from 'src/app/services/error.service';
 import { User } from 'src/app/models/models';
@@ -58,6 +52,10 @@ export class AuthService {
     localStorage.removeItem('token');
   }
 
+  getLogin() {
+    return localStorage.getItem('login');
+  }
+
   isLoggedIn() {
     return this.getToken() !== null;
   }
@@ -67,7 +65,22 @@ export class AuthService {
     this.username = localStorage.getItem('token') as string;
   }
 
+  getUserAll(): Observable<any> {
+    this.authorize();
+    const headers = new HttpHeaders({
+      accept: 'application/json',
+      Authorization: `Bearer ${this.tokenKey}`,
+    });
+
+    const requestOptions = { headers: headers };
+
+    return this.http
+      .get<any>(`${this.apiUrl}/users`, requestOptions)
+      .pipe(catchError(this.errorHandler.bind(this)));
+  }
+
   getUserId() {
+    this.authorize();
     const headers = new HttpHeaders({
       accept: 'application/json',
       Authorization: `Bearer ${this.tokenKey}`,
