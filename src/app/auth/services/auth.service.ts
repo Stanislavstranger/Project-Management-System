@@ -79,32 +79,18 @@ export class AuthService {
       .pipe(catchError(this.errorHandler.bind(this)));
   }
 
-  getUserId() {
+  getUserById(id: string): Observable<any> {
     this.authorize();
     const headers = new HttpHeaders({
       accept: 'application/json',
       Authorization: `Bearer ${this.tokenKey}`,
     });
+
     const requestOptions = { headers: headers };
 
     return this.http
-      .get<any[]>(`${this.apiUrl}/users`, requestOptions)
-      .pipe(
-        tap((res) => console.log('Ответ от сервера:', res)),
-        map((res) => {
-          let userId = null;
-          res.forEach((item) => {
-            if (item.login === this.username) {
-              userId = item._id;
-            }
-          });
-          return userId;
-        })
-      )
-      .subscribe((userId) => {
-        console.log('UserID:', userId);
-        this.userId = userId;
-      });
+      .get<any>(`${this.apiUrl}/users/${id}`, requestOptions)
+      .pipe(catchError(this.errorHandler.bind(this)));
   }
 
   logOut() {

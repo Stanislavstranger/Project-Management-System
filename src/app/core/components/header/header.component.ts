@@ -1,5 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/auth/services/auth.service';
+import {
+  ActivatedRoute,
+  ResolveEnd,
+  ResolveStart,
+  Router,
+} from '@angular/router';
+import { filter, mapTo, merge, Observable } from 'rxjs';
+import { Route } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -11,9 +19,30 @@ export class HeaderComponent implements OnInit {
   isLoggedIn = true;
   login: string | null = '';
 
-  constructor(private authService: AuthService) {}
+  private showLoader!: Observable<boolean>;
+  private hideLoader!: Observable<boolean>;
 
-  ngOnInit(): void {}
+  isLoading!: Observable<boolean>;
+
+  constructor(
+    private authService: AuthService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {
+    this.hideLoader = this.router.events.pipe(
+      filter((e) => e instanceof ResolveEnd),
+      mapTo(false)
+    );
+
+    this.showLoader = this.router.events.pipe(
+      filter((e) => e instanceof ResolveStart),
+      mapTo(true)
+    )
+
+    this.isLoading = merge(this.hideLoader, this.showLoader);
+  }
 
   ngDoCheck(): void {
     this.login = this.authService.getLogin();

@@ -13,9 +13,13 @@ import { AuthModule } from '../auth/auth.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSelectModule } from '@angular/material/select';
+import { MatCardModule } from '@angular/material/card';
+import { MatListModule } from '@angular/material/list';
+import { FilterBoardsPipe } from '../pipes/filter-boards.pipe';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
-  declarations: [BoardsListComponent, AddBoardComponent],
+  declarations: [BoardsListComponent, AddBoardComponent, FilterBoardsPipe],
   exports: [BoardsListComponent, AddBoardComponent],
   imports: [
     CommonModule,
@@ -30,6 +34,9 @@ import { MatSelectModule } from '@angular/material/select';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatSelectModule,
+    MatCardModule,
+    MatListModule,
+    DragDropModule,
   ],
   providers: [BoardsService],
 })

@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { CoreRoutingModule } from './core-routing.module';
 import { MatIconModule } from '@angular/material/icon';
 import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [HeaderComponent, FooterComponent, EditProfileComponent],
@@ -19,6 +20,7 @@ import { EditProfileComponent } from './components/edit-profile/edit-profile.com
     MatDividerModule,
     CoreRoutingModule,
     MatIconModule,
+    MatProgressBarModule
   ],
 })
 export class CoreModule {}

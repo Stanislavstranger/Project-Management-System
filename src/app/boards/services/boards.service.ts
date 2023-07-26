@@ -27,7 +27,6 @@ export class BoardsService {
 
   createBoard(boardsData: Board): Observable<any> {
     this.tokenKey = this.authService.getToken();
-    console.log("🚀 ~ file: boards.service.ts:30 ~ BoardsService ~ createBoard ~ tokenKey:", this.tokenKey)
     const headers = new HttpHeaders({
       accept: 'application/json',
       Authorization: `Bearer ${this.tokenKey}`,
@@ -42,5 +41,18 @@ export class BoardsService {
   private errorHandler(error: HttpErrorResponse) {
     this.errorService.handle(error.message);
     return throwError(() => error.message);
+  }
+
+  getBoard(): Observable<any> {
+    this.tokenKey = this.authService.getToken();
+    const headers = new HttpHeaders({
+      accept: 'application/json',
+      Authorization: `Bearer ${this.tokenKey}`,
+    });
+    const requestOptions = { headers: headers };
+
+    return this.http
+      .get<any>(`${this.apiUrl}/boards`, requestOptions)
+      .pipe(catchError(this.errorHandler.bind(this)));
   }
 }

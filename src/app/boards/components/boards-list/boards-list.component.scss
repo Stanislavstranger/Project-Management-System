@@ -1,5 +1,6 @@
 section {
   position: relative;
+  padding-bottom: 60px;
 }
 
 button {
@@ -10,5 +11,27 @@ button {
 
 mat-form-field {
   padding-top: 20px;
-  width: 62vw;
+  width: 94%;
+}
+
+.board-card {
+  margin-bottom: 20px;
+  background-color: whitesmoke;
+}
+
+.btn {
+  margin-top: 12px;
+}
+
+button.edit-btn {
+  margin-right: 50px;
+}
+
+.title {
+  margin-top: -5px;
+  margin-bottom: -5px;
+}
+
+.board-card:hover {
+  box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.2);
 }
