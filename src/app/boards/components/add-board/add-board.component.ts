@@ -80,8 +80,6 @@ export class AddBoardComponent implements OnInit {
       },
       (error) => {
         console.error('Ошибка создания доски:', error);
-        console.log(boardData);
-        console.log(this.selectedUsers);
       }
     );
   }

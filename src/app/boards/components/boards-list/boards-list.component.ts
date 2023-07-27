@@ -3,6 +3,7 @@ import { Board } from 'src/app/models/models';
 import { BoardsService } from '../../services/boards.service';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-boards-list',
@@ -13,7 +14,11 @@ export class BoardsListComponent implements OnInit {
   boards: Board[] = [];
   term = '';
 
-  constructor(private boardService: BoardsService, private authService: AuthService) {}
+  constructor(
+    private boardService: BoardsService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.boardService.getBoard().subscribe(
@@ -31,7 +36,10 @@ export class BoardsListComponent implements OnInit {
               board.owner = ownerData.login || '';
             },
             (error) => {
-              console.error('Ошибка получения данных о владельце доски:', error);
+              console.error(
+                'Ошибка получения данных о владельце доски:',
+                error
+              );
             }
           );
 
@@ -59,5 +67,33 @@ export class BoardsListComponent implements OnInit {
   onDrop(event: CdkDragDrop<Board[]>): void {
     moveItemInArray(this.boards, event.previousIndex, event.currentIndex);
   }
-}
 
+  deleteBoard(boardId: string | undefined) {
+    if (!boardId) {
+      console.error('Invalid boardId:', boardId);
+      return;
+    }
+
+    const confirmation = window.confirm(
+      'Are you sure you want to delete this board?'
+    );
+
+    if (confirmation) {
+      this.boardService.deleteBoard(boardId).subscribe(
+        (response) => {
+          console.log('Доска удалена:', response);
+          this.router.navigate(['boards-list']);
+
+          const index = this.boards.findIndex((board) => board._id === boardId);
+          if (index !== -1) {
+            this.boards.splice(index, 1);
+          }
+
+        },
+        (error) => {
+          console.error('Ошибка удаления доски:', error);
+        }
+      );
+    }
+  }
+}

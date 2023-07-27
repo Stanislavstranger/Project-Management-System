@@ -55,4 +55,17 @@ export class BoardsService {
       .get<any>(`${this.apiUrl}/boards`, requestOptions)
       .pipe(catchError(this.errorHandler.bind(this)));
   }
+
+  deleteBoard(id: string): Observable<any> {
+    this.tokenKey = this.authService.getToken();
+    const headers = new HttpHeaders({
+      accept: 'application/json',
+      Authorization: `Bearer ${this.tokenKey}`,
+    });
+    const requestOptions = { headers: headers };
+
+    return this.http
+      .delete<any>(`${this.apiUrl}/boards/${id}`, requestOptions)
+      .pipe(catchError(this.errorHandler.bind(this)));
+  }
 }

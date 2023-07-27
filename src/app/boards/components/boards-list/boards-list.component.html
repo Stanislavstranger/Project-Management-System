@@ -22,8 +22,8 @@
         title="edit board" class="btn edit-btn">
         <mat-icon>edit</mat-icon>
       </button>
-      <button mat-mini-fab color="primary" aria-label="Example icon button with a delete icon" title="delete board"
-        class="btn">
+      <button (click)="deleteBoard(board._id)" mat-mini-fab color="primary"
+        aria-label="Example icon button with a delete icon" title="delete board" class="btn">
         <mat-icon>delete</mat-icon>
       </button>
     </mat-card>
