@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { BoardsService } from 'src/app/boards/services/boards.service';
-import { Board } from 'src/app/models/models';
-import { forkJoin } from 'rxjs';
+import { Board, Column } from 'src/app/models/models';
+import { forkJoin, Subscription } from 'rxjs';
 import { ModalService } from 'src/app/services/modal.service';
+import { toArray } from 'rxjs/operators';
+import { ColumnService } from 'src/app/boards/services/column.service';
 
 @Component({
   selector: 'app-tasks-list',
@@ -13,12 +15,18 @@ import { ModalService } from 'src/app/services/modal.service';
 })
 export class TasksListComponent implements OnInit {
   board?: Board;
+  boardId: string | null = '';
+  columnData?: Column;
+  length: number = 0;
+  column?: Column;
+  private paramMapSubscription: Subscription | undefined;
 
   constructor(
     private route: ActivatedRoute,
     private boardsService: BoardsService,
     private authService: AuthService,
-    public modalService: ModalService
+    public modalService: ModalService,
+    private columnService: ColumnService
   ) {}
 
   ngOnInit(): void {
@@ -50,15 +58,22 @@ export class TasksListComponent implements OnInit {
                 this.board = board;
               },
               (error) => {
-                console.error(
-                  'Ошибка получения данных о пользователе:',
-                  error
-                );
+                console.error('Ошибка получения данных о пользователе:', error);
               }
             );
           },
           (error) => {
             console.error('Ошибка получения данных о доске:', error);
+          }
+        );
+
+        this.columnService.getColumnsAllById(boardId).subscribe(
+          (columnData: Column) => {
+            columnData;
+            console.log('Из общего', columnData);
+          },
+          (error) => {
+            console.log('Ошибка получения данных о колонках:', error);
           }
         );
       }

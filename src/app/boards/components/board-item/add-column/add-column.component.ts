@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 import { toArray } from 'rxjs/operators';
 import { ColumnService } from 'src/app/boards/services/column.service';
 import { BoardsService } from 'src/app/boards/services/boards.service';
-import { Column } from 'src/app/models/models';
+import { Board, Column } from 'src/app/models/models';
 import { ModalService } from 'src/app/services/modal.service';
 
 @Component({
@@ -15,10 +15,10 @@ import { ModalService } from 'src/app/services/modal.service';
 })
 export class AddColumnComponent implements OnInit, OnDestroy {
   formData!: FormGroup;
-  boardId: string | null = '';
-  columnData?: Column;
-  length: number = 0;
+  boardId?: string | null = '';
+  board?: string | null = '';
   column?: Column;
+  columnData?: Column | null;
   private paramMapSubscription: Subscription | undefined;
 
   constructor(
@@ -41,18 +41,21 @@ export class AddColumnComponent implements OnInit, OnDestroy {
 
       if (this.boardId) {
         this.boardsService.getBoardById(this.boardId).subscribe(
-          (boardId: string) => {
-            const board: string = boardId;
+          (board: any) => {
+            board._id;
 
-            this.columnService
-              .getColumnsAllById(boardId)
-              .pipe(toArray())
-              .subscribe(
-                (columnData: Column[]) => (this.length = columnData.length - 1),
-                (error) => {
-                  console.log('Ошибка получения данных о доске:', error);
-                }
-              );
+            this.columnService.getColumnsAllById(board._id).subscribe(
+              (columnData) => {
+                this.column = {
+                  title: this.formData.value.title,
+                  order: columnData.length,
+                };
+                console.log(this.column);
+              },
+              (error) => {
+                console.log('Ошибка получения данных о доске:', error);
+              }
+            );
           },
           (error) => {
             console.error('Ошибка получения данных о доске:', error);
@@ -63,23 +66,22 @@ export class AddColumnComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    this.column = {
-      title: this.formData.value.title,
-      order: this.length,
-    };
+    if (this.column) {
+      this.column.title = this.formData.value.title;
 
-    if (this.boardId) {
-      this.columnService.createColumn(this.boardId, this.column).subscribe(
-        (response) => {
-          console.log('Колонка создана:', response);
-          this.modalService.close();
-        },
-        (error) => {
-          console.error('Ошибка при создании колонки:', error);
-        }
-      );
-    } else {
-      console.error('Ошибка: Не удалось получить идентификатор доски.');
+      if (this.boardId) {
+        this.columnService.createColumn(this.boardId, this.column).subscribe(
+          (response) => {
+            console.log('Колонка создана:', response);
+            this.modalService.close();
+          },
+          (error) => {
+            console.error('Ошибка при создании колонки:', error);
+          }
+        );
+      } else {
+        console.error('Ошибка: Не удалось получить идентификатор доски.');
+      }
     }
   }
 
