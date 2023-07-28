@@ -27,7 +27,7 @@ import { BoardsModule } from './boards/boards.module';
     AuthModule,
     MatIconModule,
     MatButtonModule,
-    BoardsModule,
+    BoardsModule
   ],
   providers: [],
   bootstrap: [AppComponent],

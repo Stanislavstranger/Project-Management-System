@@ -13,10 +13,10 @@ export interface Board {
 }
 
 export interface Column {
-  readonly _id: string;
+  readonly _id?: string;
   title: string;
   order: number;
-  boardId: string;
+  boardId?: string;
 }
 
 export interface Task {

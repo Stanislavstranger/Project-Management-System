@@ -1,6 +1,6 @@
 <mat-toolbar color="primary">
   <header class="header__container _container">
-    <h1 class="no-select" routerLink="">{{ appTitle }}</h1>
+    <h1 class="no-select" routerLink="">{{ appTitle | uppercase }}</h1>
     <div class="button">
       <button mat-raised-button *ngIf="!isLoggedIn" routerLink="signin">
         <mat-icon style="margin-right: 5px">login</mat-icon>Sign in

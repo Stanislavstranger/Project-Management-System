@@ -1,0 +1,52 @@
+section {
+  position: relative;
+  padding-bottom: 60px;
+}
+
+p {
+  margin-top: -10px;
+}
+
+button {
+  position: absolute;
+  top: 20px;
+  right: 40px;
+}
+
+button.create-column-btn {
+  margin-right: 70px;
+}
+
+button.create-task-btn {
+  margin-right: 30px;
+}
+
+button.delete-column-btn {
+  margin-right: -20px;
+}
+
+.header-tasks-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  text-align: center;
+}
+
+.task-card {
+  height: 75vh;
+  width: 300px;
+  background-color: whitesmoke;
+}
+
+.task-card:hover {
+  box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.2);
+}
+
+.title-column {
+  margin-top: 25px;
+  margin-left: 20px;
+}

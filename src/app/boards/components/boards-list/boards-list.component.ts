@@ -4,6 +4,7 @@ import { BoardsService } from '../../services/boards.service';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Router } from '@angular/router';
+import { ModalService } from 'src/app/services/modal.service';
 
 @Component({
   selector: 'app-boards-list',
@@ -17,11 +18,12 @@ export class BoardsListComponent implements OnInit {
   constructor(
     private boardService: BoardsService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    public modalService: ModalService
   ) {}
 
   ngOnInit(): void {
-    this.boardService.getBoard().subscribe(
+    this.boardService.getBoardsAll().subscribe(
       (boardsData) => {
         boardsData.forEach((boardData: any) => {
           const board: Board = {
@@ -56,7 +58,7 @@ export class BoardsListComponent implements OnInit {
 
           this.boards.push(board);
         });
-        console.log(this.boards);
+
       },
       (error) => {
         console.error('Ошибка получения досок:', error);
@@ -95,5 +97,15 @@ export class BoardsListComponent implements OnInit {
         }
       );
     }
+  }
+
+  editBoard(board: Board) {
+    if (!board) {
+      console.error('Недопустимый идентификатор доски:', board);
+      return;
+    }
+
+    this.router.navigate(['boards-list/tasks-list', board._id]);
+    this.modalService.close();
   }
 }

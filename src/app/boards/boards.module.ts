@@ -17,10 +17,20 @@ import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { FilterBoardsPipe } from '../pipes/filter-boards.pipe';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { TasksListComponent } from './components/board-item/tasks-list/tasks-list.component';
+import { AddColumnComponent } from './components/board-item/add-column/add-column.component';
+import { ModalComponent } from '../modal/modal.component';
 
 @NgModule({
-  declarations: [BoardsListComponent, AddBoardComponent, FilterBoardsPipe],
-  exports: [BoardsListComponent, AddBoardComponent],
+  declarations: [
+    BoardsListComponent,
+    AddBoardComponent,
+    FilterBoardsPipe,
+    TasksListComponent,
+    AddColumnComponent,
+    ModalComponent
+  ],
+  exports: [BoardsListComponent, AddBoardComponent, AddColumnComponent, ModalComponent],
   imports: [
     CommonModule,
     MatInputModule,
