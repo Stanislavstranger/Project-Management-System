@@ -37,8 +37,8 @@ button.delete-column-btn {
 }
 
 .task-card {
+  flex: 0 0 23.8%;
   height: 75vh;
-  width: 300px;
   background-color: whitesmoke;
 }
 
@@ -50,3 +50,9 @@ button.delete-column-btn {
   margin-top: 25px;
   margin-left: 20px;
 }
+
+.column-container{
+  display: flex;
+  gap: 20px;
+}
+

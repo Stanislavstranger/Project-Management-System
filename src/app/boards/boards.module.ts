@@ -20,6 +20,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { TasksListComponent } from './components/board-item/tasks-list/tasks-list.component';
 import { AddColumnComponent } from './components/board-item/add-column/add-column.component';
 import { ModalComponent } from '../modal/modal.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { ModalComponent } from '../modal/modal.component';
     MatCardModule,
     MatListModule,
     DragDropModule,
+    FlexLayoutModule,
   ],
   providers: [BoardsService],
 })

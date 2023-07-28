@@ -1,32 +1,42 @@
 <section class="_container">
+
   <mat-form-field>
     <mat-label>Enter board name to search</mat-label>
     <input matInput type="text" [(ngModel)]="term">
   </mat-form-field>
+
   <button routerLink="add-board" mat-fab color="primary" aria-label="Example icon button with a delete icon"
     title="create new board">
     <mat-icon>add</mat-icon>
   </button>
+
   <div cdkDropList (cdkDropListDropped)="onDrop($event)">
+
     <mat-card cdkDropList class="board-card" *ngFor="let board of boards | filterBoards:term; let i = index" cdkDrag>
       <mat-card-header>
         <mat-card-title>
           <h3 class="title">Title: {{ board.title }}</h3>
         </mat-card-title>
+
       </mat-card-header>
+
       <mat-card-content>
         <p>Owner: {{ board.owner }}</p>
         <p>Users: {{ board.users.join(', ') }}</p>
       </mat-card-content>
-      <button (click)="editBoard(board)" mat-mini-fab color="primary" aria-label="Example icon button with a delete icon"
-        title="edit board" class="btn edit-btn">
+
+      <button (click)="editBoard(board)" mat-mini-fab color="primary"
+        aria-label="Example icon button with a delete icon" title="edit board" class="btn edit-btn">
         <mat-icon>edit</mat-icon>
       </button>
+
       <button (click)="deleteBoard(board._id)" mat-mini-fab color="primary"
         aria-label="Example icon button with a delete icon" title="delete board" class="btn">
         <mat-icon>delete</mat-icon>
       </button>
+
     </mat-card>
+
   </div>
 
   <ng-container *ngIf="boards.length === 0">

@@ -1,11 +1,10 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { toArray } from 'rxjs/operators';
 import { ColumnService } from 'src/app/boards/services/column.service';
 import { BoardsService } from 'src/app/boards/services/boards.service';
-import { Board, Column } from 'src/app/models/models';
+import { Column } from 'src/app/models/models';
 import { ModalService } from 'src/app/services/modal.service';
 
 @Component({
@@ -24,6 +23,7 @@ export class AddColumnComponent implements OnInit, OnDestroy {
   constructor(
     private columnService: ColumnService,
     private route: ActivatedRoute,
+    private router: Router,
     private boardsService: BoardsService,
     private modalService: ModalService
   ) {}
@@ -74,6 +74,10 @@ export class AddColumnComponent implements OnInit, OnDestroy {
           (response) => {
             console.log('Колонка создана:', response);
             this.modalService.close();
+
+            this.router.navigate([`../${this.boardId}`], {
+              relativeTo: this.route,
+            });
           },
           (error) => {
             console.error('Ошибка при создании колонки:', error);

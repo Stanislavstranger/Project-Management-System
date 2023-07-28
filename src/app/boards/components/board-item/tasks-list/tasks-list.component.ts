@@ -5,8 +5,8 @@ import { BoardsService } from 'src/app/boards/services/boards.service';
 import { Board, Column } from 'src/app/models/models';
 import { forkJoin, Subscription } from 'rxjs';
 import { ModalService } from 'src/app/services/modal.service';
-import { toArray } from 'rxjs/operators';
 import { ColumnService } from 'src/app/boards/services/column.service';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-tasks-list',
@@ -18,7 +18,7 @@ export class TasksListComponent implements OnInit {
   boardId: string | null = '';
   columnData?: Column;
   length: number = 0;
-  column?: Column;
+  columns: Column[] = [];
   private paramMapSubscription: Subscription | undefined;
 
   constructor(
@@ -68,15 +68,27 @@ export class TasksListComponent implements OnInit {
         );
 
         this.columnService.getColumnsAllById(boardId).subscribe(
-          (columnData: Column) => {
-            columnData;
+          (columnData) => {
+            columnData.forEach((columnData: any) => {
+              const column: Column = {
+                title: columnData.title,
+                order: columnData.order,
+              };
+
+              this.columns.push(column);
+            });
             console.log('Из общего', columnData);
           },
+
           (error) => {
             console.log('Ошибка получения данных о колонках:', error);
           }
         );
       }
     });
+  }
+
+  onDrop(event: CdkDragDrop<Column[]>): void {
+    moveItemInArray(this.columns, event.previousIndex, event.currentIndex);
   }
 }
