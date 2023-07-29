@@ -2,11 +2,12 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { BoardsService } from 'src/app/boards/services/boards.service';
-import { Board, Column } from 'src/app/models/models';
+import { Board, Column, NewColumnData } from 'src/app/models/models';
 import { forkJoin, Subscription } from 'rxjs';
 import { ModalService } from 'src/app/services/modal.service';
 import { ColumnService } from 'src/app/boards/services/column.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { SharedService } from 'src/app/shared/shared.service';
 
 @Component({
   selector: 'app-tasks-list',
@@ -20,6 +21,7 @@ export class TasksListComponent implements OnInit {
   length: number = 0;
   columns: Column[] = [];
   private paramMapSubscription: Subscription | undefined;
+  private newColumnSubscription: Subscription | undefined;
 
   constructor(
     private route: ActivatedRoute,
@@ -27,7 +29,8 @@ export class TasksListComponent implements OnInit {
     private boardsService: BoardsService,
     private authService: AuthService,
     public modalService: ModalService,
-    private columnService: ColumnService
+    private columnService: ColumnService,
+    private sharedService: SharedService
   ) {}
 
   ngOnInit(): void {
@@ -70,6 +73,7 @@ export class TasksListComponent implements OnInit {
 
         this.columnService.getColumnsAllById(boardId).subscribe(
           (columnData) => {
+            this.columns = [];
             columnData.forEach((columnData: any) => {
               const column: Column = {
                 title: columnData.title,
@@ -84,6 +88,27 @@ export class TasksListComponent implements OnInit {
 
           (error) => {
             console.log('Ошибка получения данных о колонках:', error);
+          }
+        );
+
+        this.newColumnSubscription = this.sharedService.newColumn$.subscribe(
+          (newColumnData: NewColumnData) => {
+            this.columnService
+              .getColumnById(boardId, newColumnData.id)
+              .subscribe(
+                (columnData) => {
+                  const column: Column = {
+                    title: columnData.title,
+                    order: columnData.order,
+                    _id: columnData._id,
+                  };
+                  this.columns.push(column);
+                },
+
+                (error) => {
+                  console.log('Ошибка получения данных о колонках:', error);
+                }
+              );
           }
         );
       }
@@ -110,17 +135,24 @@ export class TasksListComponent implements OnInit {
         (response) => {
           this.router.navigate([`boards-list/tasks-list/${boardId}`]);
 
-          const index = this.columns.findIndex((column) => column.order === columnOrder);
+          const index = this.columns.findIndex(
+            (column) => column.order === columnOrder
+          );
           console.log(index);
           if (index !== -1) {
             this.columns.splice(index, 1);
           }
-
         },
         (error) => {
           console.error('Ошибка удаления доски:', error);
         }
       );
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.newColumnSubscription) {
+      this.newColumnSubscription.unsubscribe();
     }
   }
 }

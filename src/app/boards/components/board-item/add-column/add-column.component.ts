@@ -4,8 +4,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ColumnService } from 'src/app/boards/services/column.service';
 import { BoardsService } from 'src/app/boards/services/boards.service';
-import { Column } from 'src/app/models/models';
+import { Column, NewColumnData } from 'src/app/models/models';
 import { ModalService } from 'src/app/services/modal.service';
+import { SharedService } from 'src/app/shared/shared.service';
 
 @Component({
   selector: 'app-add-column',
@@ -17,6 +18,7 @@ export class AddColumnComponent implements OnInit, OnDestroy {
   boardId?: string | null = '';
   board?: string | null = '';
   column?: Column;
+  columns: Column[] = [];
   columnData?: Column | null;
   private paramMapSubscription: Subscription | undefined;
 
@@ -25,7 +27,8 @@ export class AddColumnComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private boardsService: BoardsService,
-    private modalService: ModalService
+    private modalService: ModalService,
+    private sharedService: SharedService
   ) {}
 
   ngOnInit(): void {
@@ -42,18 +45,14 @@ export class AddColumnComponent implements OnInit, OnDestroy {
       if (this.boardId) {
         this.boardsService.getBoardById(this.boardId).subscribe(
           (board: any) => {
-            board._id;
+            this.board = board.title;
 
-            this.columnService.getColumnsAllById(board._id).subscribe(
+            this.columnService.getColumnsAllById(this.boardId!).subscribe(
               (columnData) => {
-                this.column = {
-                  title: this.formData.value.title,
-                  order: columnData.length,
-                };
-                console.log(this.column);
+                this.columns = columnData;
               },
               (error) => {
-                console.log('Ошибка получения данных о доске:', error);
+                console.log('Ошибка получения данных о колонках:', error);
               }
             );
           },
@@ -66,26 +65,29 @@ export class AddColumnComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    if (this.column) {
-      this.column.title = this.formData.value.title;
+    if (this.boardId && this.formData.valid) {
+      const newColumn: Column = {
+        title: this.formData.value.title,
+        order: this.columns.length,
+      };
 
-      if (this.boardId) {
-        this.columnService.createColumn(this.boardId, this.column).subscribe(
-          (response) => {
-            console.log('Колонка создана:', response);
-            this.modalService.close();
+      this.columnService.createColumn(this.boardId, newColumn).subscribe(
+        (createdColumn) => {
+          console.log('Колонка создана:', createdColumn);
+          this.modalService.close();
 
-            this.router.navigate([`../${this.boardId}`], {
-              relativeTo: this.route,
-            });
-          },
-          (error) => {
-            console.error('Ошибка при создании колонки:', error);
-          }
-        );
-      } else {
-        console.error('Ошибка: Не удалось получить идентификатор доски.');
-      }
+          const newColumnData: NewColumnData = {
+            id: createdColumn._id,
+          };
+
+          this.sharedService.emitNewColumn(newColumnData);
+
+          this.formData.reset();
+        },
+        (error) => {
+          console.error('Ошибка при создании колонки:', error);
+        }
+      );
     }
   }
 

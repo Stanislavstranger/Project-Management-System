@@ -11,6 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { GlobalErrorComponent } from './global-error/global-error.component';
 import { BoardsModule } from './boards/boards.module';
+import { SharedService } from './shared/shared.service';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,7 @@ import { BoardsModule } from './boards/boards.module';
     MatButtonModule,
     BoardsModule
   ],
-  providers: [],
+  providers: [SharedService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
