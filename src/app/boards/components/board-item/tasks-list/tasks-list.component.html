@@ -25,7 +25,7 @@
         <mat-icon>add</mat-icon>
       </button>
 
-      <button class="delete-column-btn" mat-mini-fab color="primary" aria-label="Example icon button with a home icon"
+      <button (click)="deleteColumnById(board?._id!, column._id!, column.order)" class="delete-column-btn" mat-mini-fab color="primary" aria-label="Example icon button with a home icon"
         title="delete this column">
         <mat-icon>delete</mat-icon>
       </button>

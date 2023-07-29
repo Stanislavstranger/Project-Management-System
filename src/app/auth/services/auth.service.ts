@@ -8,6 +8,7 @@ import { catchError, Observable, tap, map, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { ErrorService } from 'src/app/services/error.service';
 import { User } from 'src/app/models/models';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root',
@@ -19,11 +20,12 @@ export class AuthService {
   private tokenKey: string | null = null;
   public username: string | null = null;
   public userId: string | null = null;
+  jwtHelperService = new JwtHelperService();
 
   constructor(
     private http: HttpClient,
     private router: Router,
-    private errorService: ErrorService
+    private errorService: ErrorService,
   ) {}
 
   signUp(formData: User): Observable<any> {
@@ -61,8 +63,13 @@ export class AuthService {
   }
 
   authorize() {
-    this.tokenKey = localStorage.getItem('token') as string;
-    this.username = localStorage.getItem('token') as string;
+    if (!this.jwtHelperService.isTokenExpired(localStorage.getItem('token'))) {
+      this.tokenKey = localStorage.getItem('token') as string;
+      this.username = localStorage.getItem('token') as string;
+    } else {
+      localStorage.removeItem('login');
+      localStorage.removeItem('token');
+    }
   }
 
   getUserAll(): Observable<any> {

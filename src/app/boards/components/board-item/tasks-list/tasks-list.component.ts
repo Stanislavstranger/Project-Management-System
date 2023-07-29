@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { BoardsService } from 'src/app/boards/services/boards.service';
 import { Board, Column } from 'src/app/models/models';
@@ -23,6 +23,7 @@ export class TasksListComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private boardsService: BoardsService,
     private authService: AuthService,
     public modalService: ModalService,
@@ -73,6 +74,7 @@ export class TasksListComponent implements OnInit {
               const column: Column = {
                 title: columnData.title,
                 order: columnData.order,
+                _id: columnData._id,
               };
 
               this.columns.push(column);
@@ -90,5 +92,35 @@ export class TasksListComponent implements OnInit {
 
   onDrop(event: CdkDragDrop<Column[]>): void {
     moveItemInArray(this.columns, event.previousIndex, event.currentIndex);
+  }
+
+  deleteColumnById(boardId: string, columnId: string, columnOrder: number) {
+    if (!boardId || !columnId) {
+      console.error('Invalid boardId:', boardId);
+      console.error('Invalid columnId:', columnId);
+      return;
+    }
+
+    const confirmation = window.confirm(
+      'Are you sure you want to delete this column?'
+    );
+
+    if (confirmation) {
+      this.columnService.deleteColumnById(boardId, columnId).subscribe(
+        (response) => {
+          this.router.navigate([`boards-list/tasks-list/${boardId}`]);
+
+          const index = this.columns.findIndex((column) => column.order === columnOrder);
+          console.log(index);
+          if (index !== -1) {
+            this.columns.splice(index, 1);
+          }
+
+        },
+        (error) => {
+          console.error('Ошибка удаления доски:', error);
+        }
+      );
+    }
   }
 }

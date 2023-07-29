@@ -54,5 +54,6 @@ button.delete-column-btn {
 .column-container{
   display: flex;
   gap: 20px;
+  overflow-x: auto;
 }
 

@@ -13,9 +13,9 @@ export interface Board {
 }
 
 export interface Column {
-  readonly _id?: string;
+  _id?: string;
   title: string;
-  order?: number;
+  order: number;
   boardId?: string;
 }
 
