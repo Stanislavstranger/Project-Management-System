@@ -1,0 +1,25 @@
+<h2>Create new task</h2>
+<form [formGroup]="formData" (ngSubmit)="onSubmit()">
+
+  <mat-form-field>
+    <mat-label>title</mat-label>
+    <input matInput formControlName="title" type="title" id="typeTitleX" appFocus>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>descroption</mat-label>
+    <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
+      cdkAutosizeMaxRows="10" formControlName="description" type="description" id="typeDescriptionX"></textarea>
+  </mat-form-field>
+
+  <div class="button">
+    <button [disabled]="!formData.valid" type="submit" mat-raised-button color="primary">
+      <mat-icon style="margin-right: 5px">create</mat-icon>Create
+    </button>
+
+    <button (click)="onCancel()" type="button" mat-raised-button color="primary">
+      <mat-icon style="margin-right: 5px">cancel</mat-icon>Cancel
+    </button>
+
+  </div>
+</form>

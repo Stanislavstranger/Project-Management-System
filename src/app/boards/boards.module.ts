@@ -21,6 +21,7 @@ import { TasksListComponent } from './components/board-item/tasks-list/tasks-lis
 import { AddColumnComponent } from './components/board-item/add-column/add-column.component';
 import { ModalComponent } from '../modal/modal.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { AddTaskComponent } from './components/board-item/add-task/add-task.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     FilterBoardsPipe,
     TasksListComponent,
     AddColumnComponent,
-    ModalComponent
+    ModalComponent,
+    AddTaskComponent
   ],
   exports: [BoardsListComponent, AddBoardComponent, AddColumnComponent, ModalComponent],
   imports: [

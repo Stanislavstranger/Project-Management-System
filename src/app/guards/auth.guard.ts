@@ -23,6 +23,7 @@ export class AuthGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
+      this.authService.authorize();
     if (!this.authService.isLoggedIn()) {
       this.router.navigate(['signin']);
       return false;

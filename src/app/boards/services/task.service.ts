@@ -5,26 +5,24 @@ import {
   HttpHeaders,
 } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
-import { Router } from '@angular/router';
 import { ErrorService } from 'src/app/services/error.service';
-import { Column } from 'src/app/models/models';
+import { CreateNewTask, Task } from 'src/app/models/models';
 import { AuthService } from 'src/app/auth/services/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ColumnService {
+export class TaskService {
   private apiUrl = 'http://localhost:3000';
   private tokenKey: string | null = null;
 
   constructor(
     private http: HttpClient,
-    private router: Router,
     private errorService: ErrorService,
     private authService: AuthService
   ) {}
 
-  getColumnsAllById(boardId: string): Observable<any> {
+  getTasksInColumn(boardId: string, columnId: string): Observable<any> {
     this.tokenKey = this.authService.getToken();
     const headers = new HttpHeaders({
       accept: 'application/json',
@@ -33,44 +31,58 @@ export class ColumnService {
     const requestOptions = { headers: headers };
 
     return this.http
-      .get<any>(`${this.apiUrl}/boards/${boardId}/columns`, requestOptions)
-      .pipe(catchError(this.errorHandler.bind(this)));
-  }
-
-  getColumnById(boardId: string, columnId: string): Observable<any> {
-    this.tokenKey = this.authService.getToken();
-    const headers = new HttpHeaders({
-      accept: 'application/json',
-      Authorization: `Bearer ${this.tokenKey}`,
-    });
-    const requestOptions = { headers: headers };
-
-    return this.http
-      .get<any>(`${this.apiUrl}/boards/${boardId}/columns/${columnId}`, requestOptions)
-      .pipe(catchError(this.errorHandler.bind(this)));
-  }
-
-  createColumn(boardId: string, column: Column): Observable<any> {
-    this.tokenKey = this.authService.getToken();
-    const headers = new HttpHeaders({
-      accept: 'application/json',
-      Authorization: `Bearer ${this.tokenKey}`,
-    });
-    const requestOptions = { headers: headers };
-
-    return this.http
-      .post<any>(
-        `${this.apiUrl}/boards/${boardId}/columns`,
-        column,
+      .get<any>(
+        `${this.apiUrl}/boards/${boardId}/columns/${columnId}/tasks`,
         requestOptions
       )
       .pipe(catchError(this.errorHandler.bind(this)));
   }
 
-  putColumnById(
+  createTask(
     boardId: string,
     columnId: string,
-    column: Column
+    taskData: CreateNewTask
+  ): Observable<any> {
+    this.tokenKey = this.authService.getToken();
+    const headers = new HttpHeaders({
+      accept: 'application/json',
+      Authorization: `Bearer ${this.tokenKey}`,
+    });
+    const requestOptions = { headers: headers };
+    return this.http
+      .post<any>(
+        `${this.apiUrl}/boards/${boardId}/columns/${columnId}/tasks`,
+        taskData,
+        requestOptions
+      )
+      .pipe(catchError(this.errorHandler.bind(this)));
+  }
+
+  getTaskById(
+    boardId: string,
+    columnId: string,
+    taskId: string
+  ): Observable<any> {
+    this.tokenKey = this.authService.getToken();
+    const headers = new HttpHeaders({
+      accept: 'application/json',
+      Authorization: `Bearer ${this.tokenKey}`,
+    });
+    const requestOptions = { headers: headers };
+
+    return this.http
+      .get<any>(
+        `${this.apiUrl}/boards/${boardId}/columns/${columnId}/tasks${taskId}`,
+        requestOptions
+      )
+      .pipe(catchError(this.errorHandler.bind(this)));
+  }
+
+  putTaskById(
+    boardId: string,
+    columnId: string,
+    taskId: string,
+    taskData: Task
   ): Observable<any> {
     this.tokenKey = this.authService.getToken();
     const headers = new HttpHeaders({
@@ -81,14 +93,18 @@ export class ColumnService {
 
     return this.http
       .put<any>(
-        `${this.apiUrl}/boards/${boardId}/columns/${columnId}`,
-        column,
+        `${this.apiUrl}/boards/${boardId}/columns/${columnId}/tasks${taskId}`,
+        taskData,
         requestOptions
       )
       .pipe(catchError(this.errorHandler.bind(this)));
   }
 
-  deleteColumnById(boardId: string, columnId: string): Observable<any> {
+  deleteTaskById(
+    boardId: string,
+    columnId: string,
+    taskId: string
+  ): Observable<any> {
     this.tokenKey = this.authService.getToken();
     const headers = new HttpHeaders({
       accept: 'application/json',
@@ -98,7 +114,7 @@ export class ColumnService {
 
     return this.http
       .delete<any>(
-        `${this.apiUrl}/boards/${boardId}/columns/${columnId}`,
+        `${this.apiUrl}/boards/${boardId}/columns/${columnId}/tasks${taskId}`,
         requestOptions
       )
       .pipe(catchError(this.errorHandler.bind(this)));

@@ -6,7 +6,7 @@ export interface User {
 }
 
 export interface Board {
-  readonly _id?: string;
+  _id?: string;
   title: string;
   owner: string;
   users: string[];
@@ -20,7 +20,7 @@ export interface Column {
 }
 
 export interface Task {
-  readonly _id: string;
+  _id: string;
   title: string;
   order: number;
   boardId: string;
@@ -53,5 +53,18 @@ export interface ErrorResponse {
 
 export interface NewColumnData {
   id: string;
+}
+
+export interface NewTaskData {
+  board: Board;
+  columnId: string;
+}
+
+export interface CreateNewTask {
+  title: string;
+  order: number;
+  description: string;
+  userId: string;
+  users: string[];
 }
 

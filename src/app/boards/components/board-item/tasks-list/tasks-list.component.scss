@@ -42,7 +42,7 @@ button.delete-column-btn {
   background-color: whitesmoke;
 }
 
-.task-card:hover {
+.task-card:hover, .task:hover {
   box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.2);
 }
 
@@ -57,3 +57,14 @@ button.delete-column-btn {
   overflow-x: auto;
 }
 
+.task-container {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  margin: 0 auto;
+  gap: 15px;
+}
+
+.task {
+  padding: 0 10px;
+}

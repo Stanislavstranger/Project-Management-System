@@ -5,7 +5,7 @@
     <p>Owner: {{board?.owner}} | Users: {{board?.users}}</p>
   </div>
 
-  <button (click)="modalService.open()" class="create-column-btn" mat-fab color="primary"
+  <button (click)="addColumn()" class="create-column-btn" mat-fab color="primary"
     aria-label="Example icon button with a delete icon" title="create new column">
     <mat-icon>add</mat-icon>
   </button>
@@ -16,29 +16,31 @@
   </button>
 
   <div class="column-container" cdkDropList (cdkDropListDropped)="onDrop($event)">
-    <mat-card cdkDropList *ngFor="let column of columns let i = index" class="task-card" cdkDrag>
-
+    <mat-card *ngFor="let column of columns let i = index" class="task-card" cdkDrag>
       <h2 class="title-column">{{column.title}}</h2>
 
-      <button class="create-task-btn" mat-mini-fab color="primary" aria-label="Example icon button with a home icon"
-        title="create new task">
+      <button (click)="addTask(board!, column._id!)" class="create-task-btn" mat-mini-fab color="primary"
+        aria-label="Example icon button with a home icon" title="create new task">
         <mat-icon>add</mat-icon>
       </button>
 
-      <button (click)="deleteColumnById(board?._id!, column._id!, column.order)" class="delete-column-btn" mat-mini-fab color="primary" aria-label="Example icon button with a home icon"
-        title="delete this column">
+      <button (click)="deleteColumnById(board?._id!, column._id!, column.order)" class="delete-column-btn" mat-mini-fab
+        color="primary" aria-label="Example icon button with a home icon" title="delete this column">
         <mat-icon>delete</mat-icon>
       </button>
 
-      <mat-card-header>
-        <mat-card-title>
-          <h3 class="title">Title:</h3>
-        </mat-card-title>
-      </mat-card-header>
+      <ng-container *ngIf="tasksByColumn[column._id!] && tasksByColumn[column._id!].length > 0">
+        <div class="task-container">
+          <mat-card *ngFor="let task of tasksByColumn[column._id!] let j = index" class="task">
+            <h3>{{ task.title }}</h3>
+            <p>Description: {{ task.description }}</p>
+          </mat-card>
+        </div>
+      </ng-container>
 
-      <mat-card-content>
-        <p>Owner: </p>
-      </mat-card-content>
+      <ng-container *ngIf="!tasksByColumn[column._id!] || tasksByColumn[column._id!]?.length === 0">
+        <p>No tasks available.</p>
+      </ng-container>
 
     </mat-card>
   </div>
@@ -49,6 +51,14 @@
 
 </section>
 
-<app-modal *ngIf="modalService.isVisible$ | async">
-  <app-add-column></app-add-column>
-</app-modal>
+<div *ngIf="isAddColumn">
+  <app-modal *ngIf="modalService.isVisible$ | async">
+    <app-add-column></app-add-column>
+  </app-modal>
+</div>
+
+<div *ngIf="isAddTask">
+  <app-modal *ngIf="modalService.isVisible$ | async">
+    <app-add-task></app-add-task>
+  </app-modal>
+</div>
