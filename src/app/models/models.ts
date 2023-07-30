@@ -68,3 +68,12 @@ export interface CreateNewTask {
   users: string[];
 }
 
+export interface EditTask {
+  title: string;
+  order: number;
+  columnId: string;
+  description: string;
+  userId: number;
+  users: string[];
+}
+

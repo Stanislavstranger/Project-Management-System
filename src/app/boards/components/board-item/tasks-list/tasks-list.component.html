@@ -30,17 +30,17 @@
       </button>
 
       <ng-container *ngIf="tasksByColumn[column._id!] && tasksByColumn[column._id!].length > 0">
-        <div (click)="putTaskById()" class="task-container">
+        <div class="task-container">
           <mat-card *ngFor="let task of tasksByColumn[column._id!] let j = index" class="task">
-            <h3>{{ task.title }}</h3>
-            <button (click)="deleteTask(board?._id!, column._id!, task._id!)" class="delete-task-btn" mat-mini-fab color="primary"
-              aria-label="Example icon button with a home icon" title="delete this column">
-              <mat-icon>delete</mat-icon>
-            </button>
-            <div class="text">
-              <p>Description: {{ task.description }}</p>
-              <p>Owner: {{ task.userId }}</p>
-              <p>Users: {{ task.users }}</p>
+            <div (click)="putTaskById(task)">
+              <h3>{{ task.title }}</h3>
+              <button (click)="deleteTask(board?._id!, column._id!, task._id!)" class="delete-task-btn" mat-mini-fab color="primary"
+                aria-label="Example icon button with a home icon" title="delete this column">
+                <mat-icon>delete</mat-icon>
+              </button>
+              <div class="text">
+                <p>Description: {{ task.description }}</p>
+              </div>
             </div>
           </mat-card>
         </div>
@@ -73,6 +73,6 @@
 
 <div *ngIf="isEditTask">
   <app-modal *ngIf="modalService.isVisible$ | async">
-    <app-add-task></app-add-task>
+    <app-edit-task></app-edit-task>
   </app-modal>
 </div>

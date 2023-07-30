@@ -86,6 +86,15 @@ export class TasksListComponent implements OnInit {
             this.tasksByColumn[newTaskData.columnId].push(newTaskData);
           }
         });
+
+        this.sharedService.deleteTask$.subscribe((deleteTask) => {
+          this.deleteTaskFromColumn(deleteTask);
+        });
+
+        this.sharedService.editTask$.subscribe((updatedTask) => {
+          this.updateTaskInColumn(updatedTask);
+        });
+
       }
     });
   }
@@ -249,13 +258,49 @@ export class TasksListComponent implements OnInit {
     }
   }
 
-  putTaskById() {
+  putTaskById(task: Task) {
     this.isAddColumn = false;
     this.isAddTask = false;
     this.isEditTask = true;
     if (!this.confirmation) {
       this.modalService.open();
       this.confirmation = false;
+      console.log(task);
+      setTimeout(() => {
+        this.sharedService.emitEditTask(task);
+      }, 1000);
+    }
+  }
+
+  private updateTaskInColumn(updatedTask: Task): void {
+    const columnIndex = this.columns.findIndex(
+      (column) => column._id === updatedTask.columnId
+    );
+
+    if (columnIndex !== -1) {
+      const taskIndex = this.tasksByColumn[updatedTask.columnId].findIndex(
+        (task) => task._id === updatedTask._id
+      );
+
+      if (taskIndex !== -1) {
+        this.tasksByColumn[updatedTask.columnId][taskIndex] = updatedTask;
+      }
+    }
+  }
+
+  private deleteTaskFromColumn(deletedTask: Task): void {
+    const columnIndex = this.columns.findIndex(
+      (column) => column._id === deletedTask.columnId
+    );
+
+    if (columnIndex !== -1) {
+      const taskIndex = this.tasksByColumn[deletedTask.columnId].findIndex(
+        (task) => task._id === deletedTask._id
+      );
+
+      if (taskIndex !== -1) {
+        this.tasksByColumn[deletedTask.columnId].splice(taskIndex, 1);
+      }
     }
   }
 }

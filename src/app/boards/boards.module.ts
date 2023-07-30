@@ -22,6 +22,7 @@ import { AddColumnComponent } from './components/board-item/add-column/add-colum
 import { ModalComponent } from '../modal/modal.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AddTaskComponent } from './components/board-item/add-task/add-task.component';
+import { EditTaskComponent } from './components/board-item/edit-task/edit-task.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { AddTaskComponent } from './components/board-item/add-task/add-task.comp
     TasksListComponent,
     AddColumnComponent,
     ModalComponent,
-    AddTaskComponent
+    AddTaskComponent,
+    EditTaskComponent
   ],
   exports: [BoardsListComponent, AddBoardComponent, AddColumnComponent, ModalComponent],
   imports: [

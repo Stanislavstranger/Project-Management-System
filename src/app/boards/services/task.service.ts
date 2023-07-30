@@ -6,7 +6,7 @@ import {
 } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
 import { ErrorService } from 'src/app/services/error.service';
-import { CreateNewTask, Task } from 'src/app/models/models';
+import { CreateNewTask, EditTask } from 'src/app/models/models';
 import { AuthService } from 'src/app/auth/services/auth.service';
 
 @Injectable({
@@ -72,7 +72,7 @@ export class TaskService {
 
     return this.http
       .get<any>(
-        `${this.apiUrl}/boards/${boardId}/columns/${columnId}/tasks${taskId}`,
+        `${this.apiUrl}/boards/${boardId}/columns/${columnId}/tasks/${taskId}`,
         requestOptions
       )
       .pipe(catchError(this.errorHandler.bind(this)));
@@ -82,7 +82,7 @@ export class TaskService {
     boardId: string,
     columnId: string,
     taskId: string,
-    taskData: Task
+    taskData: EditTask
   ): Observable<any> {
     this.tokenKey = this.authService.getToken();
     const headers = new HttpHeaders({
@@ -93,7 +93,7 @@ export class TaskService {
 
     return this.http
       .put<any>(
-        `${this.apiUrl}/boards/${boardId}/columns/${columnId}/tasks${taskId}`,
+        `${this.apiUrl}/boards/${boardId}/columns/${columnId}/tasks/${taskId}`,
         taskData,
         requestOptions
       )

@@ -13,6 +13,12 @@ export class SharedService {
   private newCreateTaskSubject = new Subject<Task>();
   newCreateTask$ = this.newCreateTaskSubject.asObservable();
 
+  private editTaskSubject = new Subject<Task>();
+  editTask$ = this.editTaskSubject.asObservable();
+
+  private deleteTaskSubject = new Subject<Task>();
+  deleteTask$ = this.deleteTaskSubject.asObservable();
+
   emitNewColumn(newColumnData: NewColumnData) {
     this.newColumnSubject.next(newColumnData);
   }
@@ -23,5 +29,13 @@ export class SharedService {
 
   emitNewCreateTask(newCreateTaskData: Task) {
     this.newCreateTaskSubject.next(newCreateTaskData);
+  }
+
+  emitEditTask(editTaskData: Task) {
+    this.editTaskSubject.next(editTaskData);
+  }
+
+  emitDeleteTask(deleteTaskData: Task) {
+    this.deleteTaskSubject.next(deleteTaskData);
   }
 }
