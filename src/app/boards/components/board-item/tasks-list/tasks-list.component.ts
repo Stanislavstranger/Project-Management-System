@@ -32,9 +32,11 @@ export class TasksListComponent implements OnInit {
   private newCreateTaskSubscription: Subscription | undefined;
   isAddColumn: Boolean = false;
   isAddTask: Boolean = false;
+  isEditTask: Boolean = false;
   task!: Task;
   tasks: Task[] = [];
   tasksByColumn: { [columnId: string]: Task[] } = {};
+  confirmation: Boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -197,12 +199,14 @@ export class TasksListComponent implements OnInit {
 
   addColumn() {
     this.isAddTask = false;
+    this.isEditTask = false;
     this.isAddColumn = true;
     this.modalService.open();
   }
 
   addTask(board: Board, columnId: string) {
     this.isAddColumn = false;
+    this.isEditTask = false;
     this.isAddTask = true;
     this.modalService.open();
 
@@ -214,5 +218,44 @@ export class TasksListComponent implements OnInit {
     setTimeout(() => {
       this.sharedService.emitNewTask(newTaskData);
     }, 1000);
+  }
+
+  deleteTask(boardId: string, columnId: string, taskId: string): void {
+    this.confirmation = window.confirm(
+      'Are you sure you want to delete this task?'
+    );
+
+    if (this.confirmation) {
+      this.taskService.deleteTaskById(boardId, columnId, taskId).subscribe(
+        (response) => {
+          const columnIndex = this.columns.findIndex(
+            (column) => column._id === columnId
+          );
+          if (columnIndex !== -1) {
+            const taskIndex = this.tasksByColumn[columnId].findIndex(
+              (task) => task._id === taskId
+            );
+            if (taskIndex !== -1) {
+              this.tasksByColumn[columnId].splice(taskIndex, 1);
+            }
+          }
+          this.confirmation = false;
+        },
+        (error) => {
+          console.error('Ошибка удаления задачи:', error);
+          console.log(boardId, columnId, taskId);
+        }
+      );
+    }
+  }
+
+  putTaskById() {
+    this.isAddColumn = false;
+    this.isAddTask = false;
+    this.isEditTask = true;
+    if (!this.confirmation) {
+      this.modalService.open();
+      this.confirmation = false;
+    }
   }
 }

@@ -30,16 +30,24 @@
       </button>
 
       <ng-container *ngIf="tasksByColumn[column._id!] && tasksByColumn[column._id!].length > 0">
-        <div class="task-container">
+        <div (click)="putTaskById()" class="task-container">
           <mat-card *ngFor="let task of tasksByColumn[column._id!] let j = index" class="task">
             <h3>{{ task.title }}</h3>
-            <p>Description: {{ task.description }}</p>
+            <button (click)="deleteTask(board?._id!, column._id!, task._id!)" class="delete-task-btn" mat-mini-fab color="primary"
+              aria-label="Example icon button with a home icon" title="delete this column">
+              <mat-icon>delete</mat-icon>
+            </button>
+            <div class="text">
+              <p>Description: {{ task.description }}</p>
+              <p>Owner: {{ task.userId }}</p>
+              <p>Users: {{ task.users }}</p>
+            </div>
           </mat-card>
         </div>
       </ng-container>
 
       <ng-container *ngIf="!tasksByColumn[column._id!] || tasksByColumn[column._id!]?.length === 0">
-        <p>No tasks available.</p>
+        <p class="no-task">No tasks available.</p>
       </ng-container>
 
     </mat-card>
@@ -58,6 +66,12 @@
 </div>
 
 <div *ngIf="isAddTask">
+  <app-modal *ngIf="modalService.isVisible$ | async">
+    <app-add-task></app-add-task>
+  </app-modal>
+</div>
+
+<div *ngIf="isEditTask">
   <app-modal *ngIf="modalService.isVisible$ | async">
     <app-add-task></app-add-task>
   </app-modal>

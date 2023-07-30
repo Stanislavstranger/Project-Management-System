@@ -114,7 +114,7 @@ export class TaskService {
 
     return this.http
       .delete<any>(
-        `${this.apiUrl}/boards/${boardId}/columns/${columnId}/tasks${taskId}`,
+        `${this.apiUrl}/boards/${boardId}/columns/${columnId}/tasks/${taskId}`,
         requestOptions
       )
       .pipe(catchError(this.errorHandler.bind(this)));

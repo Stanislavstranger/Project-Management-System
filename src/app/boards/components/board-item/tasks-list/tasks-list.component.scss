@@ -63,8 +63,34 @@ button.delete-column-btn {
   width: 90%;
   margin: 0 auto;
   gap: 15px;
+  overflow-y: auto;
 }
 
 .task {
+  position: relative;
   padding: 0 10px;
+}
+
+.no-task {
+  padding-top: 20px;
+  margin: 0 auto;
+}
+
+.delete-task-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  height: 35px;
+  width: 35px;
+}
+
+.delete-task-btn mat-icon{
+  height: 20px;
+  width: 20px;
+  margin-right: 5px;
+  margin-bottom: 2px;
+}
+
+.text {
+  width: 90%;
 }
