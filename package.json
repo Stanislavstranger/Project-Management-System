@@ -1,12 +1,14 @@
 {
   "name": "project-management-app",
   "version": "0.0.0",
+  "homepage": "https://stanislavstranger.github.io/Project-Management-System/",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "deploy": "gh-pages -d build"
   },
   "private": true,
   "dependencies": {
@@ -35,6 +37,7 @@
     "@angular/compiler-cli": "^16.1.0",
     "@angular/localize": "^16.1.6",
     "@types/jasmine": "~4.3.0",
+    "gh-pages": "^5.0.0",
     "jasmine-core": "~4.6.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
