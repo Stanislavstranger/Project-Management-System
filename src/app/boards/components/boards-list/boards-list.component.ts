@@ -83,7 +83,6 @@ export class BoardsListComponent implements OnInit {
     if (confirmation) {
       this.boardService.deleteBoard(boardId).subscribe(
         (response) => {
-          console.log('Доска удалена:', response);
           this.router.navigate(['boards-list']);
 
           const index = this.boards.findIndex((board) => board._id === boardId);

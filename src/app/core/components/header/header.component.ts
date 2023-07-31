@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import {
-  ActivatedRoute,
   ResolveEnd,
   ResolveStart,
   Router,
 } from '@angular/router';
 import { filter, mapTo, merge, Observable } from 'rxjs';
-import { Route } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -26,7 +24,6 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private activatedRoute: ActivatedRoute,
     private router: Router
   ) {}
 

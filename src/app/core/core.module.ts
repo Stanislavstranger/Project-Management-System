@@ -9,6 +9,9 @@ import { CoreRoutingModule } from './core-routing.module';
 import { MatIconModule } from '@angular/material/icon';
 import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [HeaderComponent, FooterComponent, EditProfileComponent],
@@ -20,7 +23,10 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     MatDividerModule,
     CoreRoutingModule,
     MatIconModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
   ],
 })
 export class CoreModule {}

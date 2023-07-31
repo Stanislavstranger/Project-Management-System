@@ -30,7 +30,6 @@ export class SignInComponent implements OnInit {
   onSubmit() {
     this.authService.signIn(this.formData.value).subscribe(
       (response) => {
-        console.log('Вход выполнен:', response);
         this.authService.saveToken(this.formData.value.login, response.token);
         this.router.navigate(['boards-list']);
       },

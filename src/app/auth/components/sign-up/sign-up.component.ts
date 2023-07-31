@@ -31,7 +31,6 @@ export class SignUpComponent implements OnInit {
   onSubmit() {
     this.authService.signUp(this.formData.value).subscribe(
       (response) => {
-        console.log('Пользователь зарегистрирован:', response);
         this.router.navigate(['signin']);
       },
       (error) => {

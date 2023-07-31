@@ -4,10 +4,10 @@ import {
   HttpErrorResponse,
   HttpHeaders,
 } from '@angular/common/http';
-import { catchError, Observable, tap, map, throwError } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { ErrorService } from 'src/app/services/error.service';
-import { User } from 'src/app/models/models';
+import { EditUserData, User } from 'src/app/models/models';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
@@ -25,7 +25,7 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private errorService: ErrorService,
+    private errorService: ErrorService
   ) {}
 
   signUp(formData: User): Observable<any> {
@@ -97,6 +97,34 @@ export class AuthService {
 
     return this.http
       .get<any>(`${this.apiUrl}/users/${id}`, requestOptions)
+      .pipe(catchError(this.errorHandler.bind(this)));
+  }
+
+  putUserById(uderId: string, userData: EditUserData): Observable<any> {
+    this.authorize();
+    const headers = new HttpHeaders({
+      accept: 'application/json',
+      Authorization: `Bearer ${this.tokenKey}`,
+    });
+
+    const requestOptions = { headers: headers };
+
+    return this.http
+      .put<any>(`${this.apiUrl}/users/${uderId}`, userData, requestOptions)
+      .pipe(catchError(this.errorHandler.bind(this)));
+  }
+
+  deleteUserById(uderId: string): Observable<any> {
+    this.authorize();
+    const headers = new HttpHeaders({
+      accept: 'application/json',
+      Authorization: `Bearer ${this.tokenKey}`,
+    });
+
+    const requestOptions = { headers: headers };
+
+    return this.http
+      .delete<any>(`${this.apiUrl}/users/${uderId}`, requestOptions)
       .pipe(catchError(this.errorHandler.bind(this)));
   }
 

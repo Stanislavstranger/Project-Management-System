@@ -73,7 +73,6 @@ export class AddColumnComponent implements OnInit, OnDestroy {
 
       this.columnService.createColumn(this.boardId, newColumn).subscribe(
         (createdColumn) => {
-          console.log('Колонка создана:', createdColumn);
           this.modalService.close();
 
           const newColumnData: NewColumnData = {

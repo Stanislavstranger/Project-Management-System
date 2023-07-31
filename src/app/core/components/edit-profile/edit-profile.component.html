@@ -1,1 +1,39 @@
-<p>edit-profile works!</p>
+<section class="_container">
+  <h2>Edit profile</h2>
+  <form [formGroup]="formData" (ngSubmit)="onSubmit()">
+    <div>
+      <mat-form-field>
+        <mat-label>Enter new name</mat-label>
+        <input matInput formControlName="name" type="name" id="typeNameX" appFocus>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Enter new login</mat-label>
+        <input matInput formControlName="login" type="login" id="typeLoginX">
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Enter your password</mat-label>
+        <input matInput formControlName="password" [type]="hide ? 'password' : 'text'" id="typePasswordX">
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide" type="button">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+    <div class="button">
+      <button [disabled]="!formData.valid" type="submit" mat-raised-button color="primary" title="edit profile">
+        <mat-icon style="margin-right: 5px">edit</mat-icon>Edit profile
+      </button>
+      <button type="submit" mat-raised-button color="primary" routerLink="../" title="cancel">
+        <mat-icon style="margin-right: 5px">cancel</mat-icon>Cancel
+      </button>
+    </div>
+    <button (click)="deleteUserById()" type="submit" mat-raised-button color="primary"
+      title="delete profile">
+      <mat-icon style="margin-right: 5px">delete</mat-icon>Delete profile
+    </button>
+  </form>
+</section>

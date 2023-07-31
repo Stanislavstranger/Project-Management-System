@@ -12,7 +12,11 @@ import {
 import { forkJoin, Subscription } from 'rxjs';
 import { ModalService } from 'src/app/services/modal.service';
 import { ColumnService } from 'src/app/boards/services/column.service';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import {
+  CdkDragDrop,
+  moveItemInArray,
+  transferArrayItem,
+} from '@angular/cdk/drag-drop';
 import { SharedService } from 'src/app/shared/shared.service';
 import { TaskService } from 'src/app/boards/services/task.service';
 
@@ -94,7 +98,6 @@ export class TasksListComponent implements OnInit {
         this.sharedService.editTask$.subscribe((updatedTask) => {
           this.updateTaskInColumn(updatedTask);
         });
-
       }
     });
   }
@@ -156,7 +159,6 @@ export class TasksListComponent implements OnInit {
 
           this.columns.push(column);
         });
-        console.log('Из общего', columnData);
       },
 
       (error) => {
@@ -165,8 +167,53 @@ export class TasksListComponent implements OnInit {
     );
   }
 
-  onDrop(event: CdkDragDrop<Column[]>): void {
+  onColumnDrop(event: CdkDragDrop<Task[]>) {
     moveItemInArray(this.columns, event.previousIndex, event.currentIndex);
+  }
+
+  onDrop(event: CdkDragDrop<Task[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+
+      const updatedColumnsTasks: { [columnId: string]: Task[] } = {};
+      for (const column of this.columns) {
+        updatedColumnsTasks[column._id!] = this.tasksByColumn[column._id!];
+      }
+      this.updateTasksInColumns(updatedColumnsTasks);
+    }
+  }
+
+  getConnectedDropLists(column: Column): string[] {
+    return this.columns
+      .filter((col) => col !== column && col._id !== undefined)
+      .map((col) => col._id!);
+  }
+
+
+  updateTasksInColumns(updatedColumnsTasks: {
+    [columnId: string]: Task[];
+  }): void {
+    this.tasksByColumn = updatedColumnsTasks;
+  }
+
+  updateTaskOrders(tasks: Task[]): void {
+    tasks.forEach((task, index) => {
+      task.order = index;
+    });
+  }
+
+  updateColumnOrders(): void {
+    this.columns.forEach((column, index) => {
+      column.order = index;
+    });
   }
 
   deleteColumnById(boardId: string, columnId: string, columnOrder: number) {
@@ -188,7 +235,6 @@ export class TasksListComponent implements OnInit {
           const index = this.columns.findIndex(
             (column) => column.order === columnOrder
           );
-          console.log(index);
           if (index !== -1) {
             this.columns.splice(index, 1);
           }
@@ -265,7 +311,6 @@ export class TasksListComponent implements OnInit {
     if (!this.confirmation) {
       this.modalService.open();
       this.confirmation = false;
-      console.log(task);
       setTimeout(() => {
         this.sharedService.emitEditTask(task);
       }, 1000);

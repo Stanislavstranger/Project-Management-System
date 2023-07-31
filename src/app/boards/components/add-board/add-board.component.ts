@@ -75,7 +75,6 @@ export class AddBoardComponent implements OnInit {
 
     this.boardsService.createBoard(boardData).subscribe(
       (response) => {
-        console.log('Доска создана:', response);
         this.router.navigate(['boards-list']);
       },
       (error) => {

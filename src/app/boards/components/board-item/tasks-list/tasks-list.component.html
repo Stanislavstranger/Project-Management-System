@@ -15,8 +15,8 @@
     <mat-icon>arrow_back</mat-icon>
   </button>
 
-  <div class="column-container" cdkDropList (cdkDropListDropped)="onDrop($event)">
-    <mat-card *ngFor="let column of columns let i = index" class="task-card" cdkDrag>
+  <div class="column-container" cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="onColumnDrop($event)">
+    <mat-card *ngFor="let column of columns let i = index" class="task-card" cdkDrag cdkDragLockAxis="x" [cdkDragData]="column">
       <h2 class="title-column">{{column.title}}</h2>
 
       <button (click)="addTask(board!, column._id!)" class="create-task-btn" mat-mini-fab color="primary"
@@ -30,12 +30,12 @@
       </button>
 
       <ng-container *ngIf="tasksByColumn[column._id!] && tasksByColumn[column._id!].length > 0">
-        <div class="task-container">
-          <mat-card *ngFor="let task of tasksByColumn[column._id!] let j = index" class="task">
+        <div class="task-container" cdkDropList [cdkDropListData]="tasksByColumn[column._id!]" (cdkDropListDropped)="onDrop($event)" [cdkDropListConnectedTo]="getConnectedDropLists(column)">
+          <mat-card *ngFor="let task of tasksByColumn[column._id!] let j = index" class="task" cdkDrag [cdkDragData]="task">
             <div (click)="putTaskById(task)">
               <h3>{{ task.title }}</h3>
               <button (click)="deleteTask(board?._id!, column._id!, task._id!)" class="delete-task-btn" mat-mini-fab color="primary"
-                aria-label="Example icon button with a home icon" title="delete this column">
+                aria-label="Example icon button with a home icon" title="delete this task">
                 <mat-icon>delete</mat-icon>
               </button>
               <div class="text">

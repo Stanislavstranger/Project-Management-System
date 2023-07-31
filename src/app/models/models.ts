@@ -1,3 +1,5 @@
+import { ObjectId } from "bson";
+
 export interface User {
   readonly _id: string;
   name: string;
@@ -77,3 +79,8 @@ export interface EditTask {
   users: string[];
 }
 
+export interface EditUserData {
+  name: string;
+  login: string;
+  password: any;
+}
