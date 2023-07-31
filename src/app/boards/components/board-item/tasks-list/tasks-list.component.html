@@ -1,0 +1,78 @@
+<section class="_container">
+
+  <div class="header-tasks-list">
+    <h2 class="title">{{board?.title}}</h2>
+    <p>Owner: {{board?.owner}} | Users: {{board?.users}}</p>
+  </div>
+
+  <button (click)="addColumn()" class="create-column-btn" mat-fab color="primary"
+    aria-label="Example icon button with a delete icon" title="create new column">
+    <mat-icon>add</mat-icon>
+  </button>
+
+  <button routerLink="../../" mat-fab color="primary" aria-label="Example icon button with a delete icon"
+    title="go back">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+
+  <div class="column-container" cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="onColumnDrop($event)">
+    <mat-card *ngFor="let column of columns let i = index" class="task-card" cdkDrag cdkDragLockAxis="x" [cdkDragData]="column">
+      <h2 class="title-column">{{column.title}}</h2>
+
+      <button (click)="addTask(board!, column._id!)" class="create-task-btn" mat-mini-fab color="primary"
+        aria-label="Example icon button with a home icon" title="create new task">
+        <mat-icon>add</mat-icon>
+      </button>
+
+      <button (click)="deleteColumnById(board?._id!, column._id!, column.order)" class="delete-column-btn" mat-mini-fab
+        color="primary" aria-label="Example icon button with a home icon" title="delete this column">
+        <mat-icon>delete</mat-icon>
+      </button>
+
+      <ng-container *ngIf="tasksByColumn[column._id!] && tasksByColumn[column._id!].length > 0">
+        <div class="task-container" cdkDropList [cdkDropListData]="tasksByColumn[column._id!]" (cdkDropListDropped)="onDrop($event)" [cdkDropListConnectedTo]="getConnectedDropLists(column)">
+          <mat-card *ngFor="let task of tasksByColumn[column._id!] let j = index" class="task" cdkDrag [cdkDragData]="task">
+            <div (click)="putTaskById(task)">
+              <h3>{{ task.title }}</h3>
+              <button (click)="deleteTask(board?._id!, column._id!, task._id!)" class="delete-task-btn" mat-mini-fab color="primary"
+                aria-label="Example icon button with a home icon" title="delete this task">
+                <mat-icon>delete</mat-icon>
+              </button>
+              <div class="text">
+                <p>Description: {{ task.description }}</p>
+              </div>
+            </div>
+          </mat-card>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="!tasksByColumn[column._id!] || tasksByColumn[column._id!]?.length === 0">
+        <p class="no-task">No tasks available.</p>
+      </ng-container>
+
+    </mat-card>
+  </div>
+
+  <ng-container *ngIf="columns.length === 0">
+    <p>No boards available.</p>
+  </ng-container>
+
+</section>
+
+<div *ngIf="isAddColumn">
+  <app-modal *ngIf="modalService.isVisible$ | async">
+    <app-add-column></app-add-column>
+  </app-modal>
+</div>
+
+<div *ngIf="isAddTask">
+  <app-modal *ngIf="modalService.isVisible$ | async">
+    <app-add-task></app-add-task>
+  </app-modal>
+</div>
+
+<div *ngIf="isEditTask">
+  <app-modal *ngIf="modalService.isVisible$ | async">
+    <app-edit-task></app-edit-task>
+  </app-modal>
+</div>

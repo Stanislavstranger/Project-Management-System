@@ -1,0 +1,21 @@
+<mat-toolbar color="primary">
+  <header class="header__container _container">
+    <h1 class="no-select" routerLink="">{{ appTitle | uppercase }}</h1>
+    <div class="button">
+      <button mat-raised-button *ngIf="!isLoggedIn" routerLink="signin">
+        <mat-icon style="margin-right: 5px">login</mat-icon>Sign in
+      </button>
+      <button mat-raised-button *ngIf="!isLoggedIn" routerLink="signup">
+        <mat-icon style="margin-right: 5px">person</mat-icon>Sing up
+      </button>
+      <span *ngIf="isLoggedIn">{{login}}</span>
+      <button mat-raised-button *ngIf="isLoggedIn" routerLink="edit-profile">
+        <mat-icon style="margin-right: 5px">edit</mat-icon>Edit profile
+      </button>
+      <button mat-raised-button *ngIf="isLoggedIn" (click)="logOut()" data-logout-btn>
+        <mat-icon style="margin-right: 5px">logout</mat-icon>Logout
+      </button>
+    </div>
+  </header>
+</mat-toolbar>
+<mat-progress-bar mode="determinate" value="40" color="warn" *ngIf="isLoading | async"></mat-progress-bar>

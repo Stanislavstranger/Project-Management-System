@@ -1,0 +1,37 @@
+section {
+  position: relative;
+  padding-bottom: 60px;
+}
+
+button {
+  position: absolute;
+  top: 20px;
+  right: 40px;
+}
+
+mat-form-field {
+  padding-top: 20px;
+  width: 94%;
+}
+
+.board-card {
+  margin-bottom: 20px;
+  background-color: whitesmoke;
+}
+
+.btn {
+  margin-top: 12px;
+}
+
+button.edit-btn {
+  margin-right: 50px;
+}
+
+.title {
+  margin-top: -5px;
+  margin-bottom: -5px;
+}
+
+.board-card:hover {
+  box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.2);
+}

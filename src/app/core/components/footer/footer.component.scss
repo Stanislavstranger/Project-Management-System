@@ -1,0 +1,69 @@
+.footer {}
+
+.footer__container {
+  display: flex;
+  width: 100%;
+  min-height: 60px;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.my-github {
+  position: relative;
+  padding-left: 50px;
+}
+
+.my-github::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  background: url('../../../../assets/img/github.png') 0 0/contain no-repeat;
+}
+
+.link-rs-school {
+  width: auto;
+  height: 40px;
+}
+
+.link-rs-school img {
+  width: auto;
+  height: 40px;
+}
+
+@media (max-width: 520px) {
+  .footer__container {
+      flex-direction: column;
+      padding-top: 20px;
+  }
+
+  .my-github {
+      padding-bottom: 30px;
+      order: 1;
+  }
+
+  .year {
+      order: 3;
+      padding-top: 30px;
+  }
+
+  .link-rs-school {
+      order: 2;
+
+  }
+
+}
+
+a,
+a:visited {
+    text-decoration: none;
+    color: #fff;
+}
+
+a:hover {
+    text-decoration: none;
+}

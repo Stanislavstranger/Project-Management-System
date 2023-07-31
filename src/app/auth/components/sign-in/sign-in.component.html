@@ -1,0 +1,25 @@
+<section class="_container">
+  <h2>Sign in</h2>
+  <form [formGroup]="formData" (ngSubmit)="onSubmit()">
+    <div>
+      <mat-form-field>
+        <mat-label>Login</mat-label>
+        <input matInput formControlName="login" type="login" id="typeLoginX" appFocus>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Enter your password</mat-label>
+        <input matInput formControlName="password" [type]="hide ? 'password' : 'text'" id="typePasswordX">
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide" type="button">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+    <button [disabled]="!formData.valid" type="submit" mat-raised-button color="primary">
+      <mat-icon style="margin-right: 5px">login</mat-icon>Sign in
+    </button>
+    <p>Don't have an account? <a routerLinkActive="active" routerLink="signup">Sign Up</a></p>
+  </form>
+</section>
