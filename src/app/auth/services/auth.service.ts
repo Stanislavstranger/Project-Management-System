@@ -14,8 +14,8 @@ import { JwtHelperService } from '@auth0/angular-jwt';
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:3000';
-  /* private apiUrl = 'https://final-task-backend-production-4453.up.railway.app'; */
+  /* private apiUrl = 'http://localhost:3000'; */
+  private apiUrl = 'https://final-task-backend-production-4453.up.railway.app';
 
   private tokenKey: string | null = null;
   public username: string | null = null;

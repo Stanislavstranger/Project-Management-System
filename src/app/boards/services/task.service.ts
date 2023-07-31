@@ -13,7 +13,8 @@ import { AuthService } from 'src/app/auth/services/auth.service';
   providedIn: 'root',
 })
 export class TaskService {
-  private apiUrl = 'http://localhost:3000';
+  /* private apiUrl = 'http://localhost:3000'; */
+  private apiUrl = 'https://final-task-backend-production-4453.up.railway.app';
   private tokenKey: string | null = null;
 
   constructor(
